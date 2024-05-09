@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeCraft</title>
+  <link rel="icon" href="images/logo.png" />
+</head>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,500;1,500&display=swap');
+
+  body {
+    background-color: black;
+  }
+
+  #main {
+    width: 35%;
+  }
+
+  #head {
+    height: 35px;
+    background-color: black;
+    display: flex;
+    -ms-flex-align: start;
+    gap: 10px;
+    width: 100%;
+    padding-right: 60px;
+  }
+
+  #codeEditor {
+    width: 100%;
+  }
+
+  button {
+    width: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    color: white;
+    background-color: #212122;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: 2px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  }
+
+  button.active {
+    background-color: #444;
+    transform: scale(1.1);
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
+
+  #codeEditor {
+    height: 555px;
+  }
+
+  textarea {
+    resize: none;
+    background-color: #212122;
+    border: 2px solid #797d7f;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    border-right: none;
+    color: white;
+    display: none;
+    padding: 30px;
+    font-size: 16px;
+    outline: none;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  textarea:focus {
+    border-right: none;
+  }
+
+  textarea.show {
+    display: block;
+  }
+
+  textarea::-webkit-scrollbar,
+  pre::-webkit-scrollbar {
+    display: none;
+  }
+
+  #output {
+    width: 60%;
+    background-color: white;
+    height: 650px;
+  }
+
+  #flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #heading {
+    background-color: black;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+    padding-right: 60px;
+    padding-left: 40px;
+  }
+
+  #runButton {
+    background-color: #58d68d;
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  #runButton:active {
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  }
+
+  #right {
+    display: flex;
+    gap: 35px;
+  }
+
+  .Reset {
+    background-color: #e74c3c;
+    width: 130px;
+    font-size: 16px;
+  }
+
+  .Reset:active {
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  }
+
+  h1 {
+    color: white;
+    margin: auto;
+    margin-left: 100px;
+    font-variant: small-caps;
+    font-size: 40px;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-top: -12px;
+    letter-spacing: 1px;
+  }
+
+  .highlight {
+    color: green;
+  }
+
+  select {
+    border: none;
+    outline: none;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    border-radius: 3px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  }
+
+  option {
+    font-weight: bold;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 15px;
+  }
+</style>
+
+<body>
+  <div id="heading">
+    <div id="left">
+      <h1>CodeCraft</h1>
+    </div>
+    <div id="right">
+      <select id="theme" oninput="change()">
+        <option value="a11y-dark">a11y-dark</option>
+        <option value="agate">agate</option>
+        <option value="an-old-hope">an-old-hope</option>
+        <option value="arta">arta</option>
+        <option value="atom-one-dark-reasonable">atom-one-dark-reasonable</option>
+        <option value="tomorrow-night-blue">tomorrow-night-blue</option>
+        <option value="srcery">srcery</option>
+        <option value="rainbow">rainbow</option>
+        <option value="hybrid">hybrid</option>
+        <option value="github-dark">github-dark</option>
+      </select>
+      <button class="Reset" onclick="reset()">Reset Code</button>
+    </div>
+  </div>
+  <hr />
+  <div id="flex">
+    <div id="main">
+      <div id="head">
+        <button id="htmlButton" class="active" onclick="changeCode('html')">
+          <img src="images/html.png" alt="html" width="20px" height="20px" />HTML
+        </button>
+        <button id="cssButton" onclick="changeCode('css')">
+          <img src="images/css.png" alt="html" width="20px" height="20px" />CSS
+        </button>
+        <button id="jsButton" onclick="changeCode('js')">
+          <img src="images/js.png" alt="html" width="20px" height="20px" />JS
+        </button>
+        <button id="runButton">Run</button>
+      </div>
+      <div class="code-editor" id="codeEditor">
+        <textarea is="highlighted-code" language="html" id="htmlCode" class="show" spellcheck="false"
+          placeholder="HTML....."></textarea>
+        <textarea is="highlighted-code" language="css" id="cssCode" spellcheck="false"
+          placeholder="CSS....."></textarea>
+        <textarea is="highlighted-code" language="javascript" id="jsCode" spellcheck="false"
+          placeholder="JS....."></textarea>
+      </div>
+    </div>
+
+    <iframe id="output"></iframe>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+</body>
+
+</html>
